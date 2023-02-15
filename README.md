@@ -1,1 +1,3 @@
-# gamer-party
+# GamerParty
+
+## I. diagram

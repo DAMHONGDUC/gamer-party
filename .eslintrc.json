@@ -4,7 +4,7 @@
         "es2021": true
     },
     "extends": [
-        "plugin:@react-native-community",
+        "@react-native-community",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",

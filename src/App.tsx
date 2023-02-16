@@ -1,8 +1,12 @@
 import React from 'react';
 import HomeScreen from 'screens/home/HomeScreen';
+import SplashScreen from 'react-native-splash-screen';
+import {useEffect} from 'react';
 
-function App(): JSX.Element {
+export default function App(): JSX.Element {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return <HomeScreen />;
 }
-
-export default App;

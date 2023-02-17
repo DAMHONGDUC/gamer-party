@@ -21,7 +21,8 @@
         "react",
         "@typescript-eslint"
     ],
-    "rules": {
+    "rules": { 
+        "no-empty": "off"
     },
     "settings" : {
         "react": {

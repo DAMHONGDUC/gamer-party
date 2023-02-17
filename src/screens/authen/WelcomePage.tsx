@@ -1,10 +1,45 @@
 import {COLORS} from 'constants/theme';
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import LoginOptionButton from 'components/LoginOptionButton';
+import {loginGoogle} from 'api/authenAPI';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {firebase} from '@react-native-firebase/auth';
+import {createNewUser} from 'api/authenAPI';
+import {AuthContext} from 'constants/values';
+import {setAsyncStorageData} from 'helper';
+import {USER_ID} from 'constants/values';
 
+GoogleSignin.configure({
+  webClientId:
+    '416265090283-q8lkm9dvbsk71t11voq0kcq077dauljq.apps.googleusercontent.com',
+});
 export default function WelcomePage(): JSX.Element {
+  const {handleAfterSignIn} = useContext(AuthContext);
+
+  const handleGoogleSignIn = async () => {
+    await loginGoogle();
+
+    // get curr user
+    const res = firebase.auth().currentUser;
+
+    if (res?.providerData[0]) {
+      const providerData = res.providerData[0];
+
+      if (providerData.uid && providerData.email) {
+        await createNewUser(
+          providerData.uid,
+          providerData.email,
+          providerData.email,
+        );
+
+        handleAfterSignIn();
+        await setAsyncStorageData(USER_ID, providerData.uid);
+      }
+    }
+  };
+
   return (
     <LinearGradient
       style={styles.container}
@@ -27,18 +62,21 @@ export default function WelcomePage(): JSX.Element {
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={0}
+          //onPress={() => {}}
         />
         <LoginOptionButton
           title={'Đăng nhập bằng Google'}
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={1}
+          onPress={handleGoogleSignIn}
         />
         <LoginOptionButton
           title={'Đăng nhập bằng số điện thoại'}
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={2}
+          //onPress={() => {}}
         />
       </View>
     </LinearGradient>

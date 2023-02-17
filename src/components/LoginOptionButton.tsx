@@ -9,6 +9,7 @@ type Props = {
   mainColor: string;
   textColor: string;
   type: number;
+  onPress: () => void;
 };
 
 export default function LoginOptionButton({
@@ -16,6 +17,7 @@ export default function LoginOptionButton({
   mainColor,
   textColor,
   type,
+  onPress,
 }: Props): JSX.Element {
   const getIcon = (): JSX.Element | undefined => {
     switch (type) {
@@ -45,10 +47,6 @@ export default function LoginOptionButton({
           />
         );
     }
-  };
-
-  const onPress = () => {
-    console.log('on pres');
   };
 
   return (

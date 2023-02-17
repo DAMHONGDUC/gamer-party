@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {setAsyncStorageData, getAsyncStorageData} from 'helper';
-import {LOGIN_TOKEN} from 'constants/values';
+import {USER_ID} from 'constants/values';
 import MainStack from './MainStack';
 import AuthenticationStack from './AuthenticationStack';
 import {AuthContext} from 'constants/values';
@@ -14,7 +14,7 @@ export default function RootNavigation(): JSX.Element {
 
   useEffect(() => {
     const setUpAsyncStorageData = async () => {
-      const loginToken = await getAsyncStorageData(LOGIN_TOKEN);
+      const loginToken = await getAsyncStorageData(USER_ID);
 
       if (loginToken) {
         setisSignedIn(true);

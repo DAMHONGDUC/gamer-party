@@ -1,18 +1,22 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import React, {useContext} from 'react';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {firebase} from '@react-native-firebase/auth';
 import {COLORS} from 'constants/theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from 'constants/values';
+import {useDispatch} from 'react-redux';
+import {setUid} from 'redux/slices/appSlide';
 
 export default function UserDetailPage() {
   const navigation = useNavigation();
   const {handleAfterSignOut} = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const onLogout = async () => {
     await firebase.auth().signOut();
     await handleAfterSignOut();
+    dispatch(setUid(null));
 
     navigation.navigate('AuthenticationStack', {screen: 'WelcomePage'});
   };

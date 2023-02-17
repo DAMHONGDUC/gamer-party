@@ -6,11 +6,14 @@ import {USER_ID} from 'constants/values';
 import MainStack from './MainStack';
 import AuthenticationStack from './AuthenticationStack';
 import {AuthContext} from 'constants/values';
+import {useDispatch} from 'react-redux';
+import {setUid} from 'redux/slices/appSlide';
 
 const RootStack = createNativeStackNavigator();
 
 export default function RootNavigation(): JSX.Element {
   const [isSignedIn, setisSignedIn] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const setUpAsyncStorageData = async () => {
@@ -18,11 +21,12 @@ export default function RootNavigation(): JSX.Element {
 
       if (userId) {
         setisSignedIn(true);
+        dispatch(setUid(userId));
       }
     };
 
     setUpAsyncStorageData();
-  }, []);
+  }, [dispatch]);
 
   const handleAfterSignIn = async () => {
     setisSignedIn(true);

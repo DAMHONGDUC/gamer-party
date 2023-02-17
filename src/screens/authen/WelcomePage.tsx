@@ -1,6 +1,6 @@
 import {COLORS} from 'constants/theme';
 import React, {useContext} from 'react';
-import {Button, Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import LoginOptionButton from 'components/LoginOptionButton';
 import {loginGoogle} from 'api/authenAPI';
@@ -10,6 +10,8 @@ import {createNewUser} from 'api/authenAPI';
 import {AuthContext} from 'constants/values';
 import {setAsyncStorageData} from 'helper';
 import {USER_ID} from 'constants/values';
+import {useDispatch} from 'react-redux';
+import {setUid} from 'redux/slices/appSlide';
 
 GoogleSignin.configure({
   webClientId:
@@ -17,6 +19,7 @@ GoogleSignin.configure({
 });
 export default function WelcomePage(): JSX.Element {
   const {handleAfterSignIn} = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleGoogleSignIn = async () => {
     await loginGoogle();
@@ -36,8 +39,17 @@ export default function WelcomePage(): JSX.Element {
 
         handleAfterSignIn();
         await setAsyncStorageData(USER_ID, providerData.uid);
+        dispatch(setUid(providerData.uid));
       }
     }
+  };
+
+  const handleFacebookSignIn = async () => {
+    console.log('handleFacebookSignIn');
+  };
+
+  const handlePhoneSignIn = async () => {
+    console.log('handlePhoneSignIn');
   };
 
   return (
@@ -62,7 +74,7 @@ export default function WelcomePage(): JSX.Element {
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={0}
-          //onPress={() => {}}
+          onPress={handleFacebookSignIn}
         />
         <LoginOptionButton
           title={'Đăng nhập bằng Google'}
@@ -76,7 +88,7 @@ export default function WelcomePage(): JSX.Element {
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={2}
-          //onPress={() => {}}
+          onPress={handlePhoneSignIn}
         />
       </View>
     </LinearGradient>

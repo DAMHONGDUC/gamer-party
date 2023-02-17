@@ -14,9 +14,9 @@ export default function RootNavigation(): JSX.Element {
 
   useEffect(() => {
     const setUpAsyncStorageData = async () => {
-      const loginToken = await getAsyncStorageData(USER_ID);
+      const userId = await getAsyncStorageData(USER_ID);
 
-      if (loginToken) {
+      if (userId) {
         setisSignedIn(true);
       }
     };
@@ -24,7 +24,7 @@ export default function RootNavigation(): JSX.Element {
     setUpAsyncStorageData();
   }, []);
 
-  const handleAfterSignIn = () => {
+  const handleAfterSignIn = async () => {
     setisSignedIn(true);
   };
 
@@ -32,7 +32,7 @@ export default function RootNavigation(): JSX.Element {
     setisSignedIn(false);
 
     // clear token
-    await setAsyncStorageData(LOGIN_TOKEN, '');
+    await setAsyncStorageData(USER_ID, '');
   };
 
   return (

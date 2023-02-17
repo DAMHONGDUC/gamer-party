@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useEffect} from 'react';
-import HomePage from 'screens/home/HomePage';
+import BottomTabStack from './BottomTabStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,7 +9,7 @@ export default function MainStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="BottomTabStack"
-        component={HomePage}
+        component={BottomTabStack}
         options={{
           headerShadowVisible: false,
           headerShown: false,

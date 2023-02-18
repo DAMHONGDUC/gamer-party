@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import LoginOptionButton from 'components/LoginOptionButton';
-import {loginGoogle} from 'api/authenAPI';
+import {loginGoogle, loginFacebook} from 'api/authenAPI';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {firebase} from '@react-native-firebase/auth';
 import {createNewUser} from 'api/authenAPI';
@@ -21,9 +21,7 @@ export default function WelcomePage(): JSX.Element {
   const {handleAfterSignIn} = useContext(AuthContext);
   const dispatch = useDispatch();
 
-  const handleGoogleSignIn = async () => {
-    await loginGoogle();
-
+  const storeDataSocialLogin = async () => {
     // get curr user
     const res = firebase.auth().currentUser;
 
@@ -44,8 +42,16 @@ export default function WelcomePage(): JSX.Element {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    await loginGoogle();
+
+    storeDataSocialLogin();
+  };
+
   const handleFacebookSignIn = async () => {
-    console.log('handleFacebookSignIn');
+    await loginFacebook();
+
+    storeDataSocialLogin();
   };
 
   const handlePhoneSignIn = async () => {

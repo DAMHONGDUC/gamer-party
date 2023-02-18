@@ -22,7 +22,8 @@
         "@typescript-eslint"
     ],
     "rules": { 
-        "no-empty": "off"
+        "no-empty": "off",
+        "react/no-unescaped-entities":  "off"
     },
     "settings" : {
         "react": {

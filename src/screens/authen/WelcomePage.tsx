@@ -12,6 +12,7 @@ import {setAsyncStorageData} from 'helper';
 import {USER_ID} from 'constants/values';
 import {useDispatch} from 'react-redux';
 import {setUid} from 'redux/slices/appSlide';
+import {useNavigation} from '@react-navigation/native';
 
 GoogleSignin.configure({
   webClientId:
@@ -20,6 +21,7 @@ GoogleSignin.configure({
 export default function WelcomePage(): JSX.Element {
   const {handleAfterSignIn} = useContext(AuthContext);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const storeDataSocialLogin = async () => {
     // get curr user
@@ -55,7 +57,7 @@ export default function WelcomePage(): JSX.Element {
   };
 
   const handlePhoneSignIn = async () => {
-    console.log('handlePhoneSignIn');
+    navigation.navigate('SignInPage');
   };
 
   return (

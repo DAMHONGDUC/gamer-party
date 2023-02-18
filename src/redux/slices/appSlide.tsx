@@ -10,8 +10,6 @@ export const appSlide = createSlice({
   reducers: {
     setUid: (state, action) => {
       state.uid = action.payload;
-
-      console.log(action.payload);
     },
   },
 });

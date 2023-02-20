@@ -12,6 +12,7 @@ export const COLORS = {
   orange: '#FFA500',
   pink: '	#fe3c72',
   grey: '#C1C0C9',
+  blue: '#537FE7',
 
   fbColor: '#3b5998',
   underlayColor: '#B2B2B2',

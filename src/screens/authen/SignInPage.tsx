@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,28 +14,39 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {checkValidateEmail, checkValidatePhone} from 'helper';
 import * as Yup from 'yup';
-import {handleEmailPhoneSignIn} from 'api/authenAPI';
+import {handleEmailSignIn} from 'api/authenAPI';
+import {AuthContext} from 'constants/values';
 
 const SignupSchema = Yup.object().shape({
+  // email_or_phone: Yup.string()
+  //   .required('Email / Phone is required')
+  //   .test('email_or_phone', 'Email / Phone is invalid', value => {
+  //     return checkValidateEmail(value) || checkValidatePhone(value);
+  //   }),
   email_or_phone: Yup.string()
-    .required('Email / Phone is required')
-    .test('email_or_phone', 'Email / Phone is invalid', value => {
-      return checkValidateEmail(value) || checkValidatePhone(value);
+    .required('Email is required')
+    .test('email_or_phone', 'Email is invalid', value => {
+      return checkValidateEmail(value);
     }),
   password: Yup.string().required('Password is required'),
 });
 
 export default function SignInPage(): JSX.Element {
   const navigation = useNavigation();
+  const {handleAfterSignIn} = useContext(AuthContext);
 
   const handleBackButton = () => {
     navigation.navigate('WelcomePage');
   };
 
-  const handleSignIn = async (username: string, password: string) => {
-    const isSignIn = await handleEmailPhoneSignIn(username, password);
+  const navToVerifyPage = (email: string) => {
+    navigation.navigate('VerifyPage', {email: email});
+  };
 
-    console.log(isSignIn);
+  const handleSignIn = async (username: string, password: string) => {
+    const user = await handleEmailSignIn(username, password);
+
+    user.emailVerified ? handleAfterSignIn() : navToVerifyPage(username);
   };
 
   return (
@@ -67,7 +78,8 @@ export default function SignInPage(): JSX.Element {
         }) => (
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Email or Phone Number"
+              //placeholder="Email or Phone Number"
+              placeholder="Email"
               placeholderTextColor={COLORS.grey}
               style={styles.textInput}
               onChangeText={handleChange('email_or_phone')}

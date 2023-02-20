@@ -3,6 +3,7 @@ import React from 'react';
 import SignInPage from 'screens/authen/SignInPage';
 import SignUpPage from 'screens/authen/SignUpPage';
 import WelcomePage from 'screens/authen/WelcomePage';
+import VerifyPage from 'screens/authen/VerifyPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,11 @@ export default function AuthenticationStack() {
       <Stack.Screen
         name="SignInPage"
         component={SignInPage}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="VerifyPage"
+        component={VerifyPage}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

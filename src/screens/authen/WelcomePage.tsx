@@ -78,21 +78,21 @@ export default function WelcomePage(): JSX.Element {
           Đăng nhập để kết nối và tìm bạn bè chơi game chung.
         </Text>
         <LoginOptionButton
-          title={'Đăng nhập bằng Facebook'}
+          title={'Continue with Facebook'}
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={0}
           onPress={handleFacebookSignIn}
         />
         <LoginOptionButton
-          title={'Đăng nhập bằng Google'}
+          title={'Continue with Google'}
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={1}
           onPress={handleGoogleSignIn}
         />
         <LoginOptionButton
-          title={'Đăng nhập bằng số điện thoại'}
+          title={'Continue with Email'}
           mainColor={COLORS.white}
           textColor={COLORS.black}
           type={2}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,16 +12,44 @@ import {COLORS} from 'constants/theme';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {handleEmailSignUp} from 'api/authenAPI';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default function SignInPage(): JSX.Element {
   const navigation = useNavigation();
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleBackButton = () => {
     navigation.navigate('SignInPage');
   };
 
+  const handleSignUp = async () => {
+    const status = await handleEmailSignUp('hongduc001h@gmail.com', '123456');
+
+    if (status) setShowAlert(true);
+  };
+
+  const navToSignInPage = () => {
+    setShowAlert(false);
+    navigation.navigate('SignInPage');
+  };
+
   return (
     <View style={styles.container}>
+      <AwesomeAlert
+        show={showAlert}
+        showProgress={false}
+        title="Success"
+        message="You are successfully registered"
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        confirmText="Go to sign in page"
+        confirmButtonColor="#DD6B55"
+        onConfirmPressed={navToSignInPage}
+      />
+
       <TouchableHighlight
         style={styles.containerBackButton}
         underlayColor={COLORS.white}
@@ -37,7 +65,8 @@ export default function SignInPage(): JSX.Element {
         {({handleChange, handleBlur, handleSubmit, values}) => (
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Email hoặc SĐT"
+              // placeholder="Email hoặc SĐT"
+              placeholder="Email"
               placeholderTextColor={COLORS.grey}
               style={styles.textInput}
               onChangeText={handleChange('email')}
@@ -47,7 +76,8 @@ export default function SignInPage(): JSX.Element {
             />
 
             <TextInput
-              placeholder="Họ và tên"
+              //placeholder="Họ và tên"
+              placeholder="Fullname"
               style={styles.textInput}
               placeholderTextColor={COLORS.grey}
               onChangeText={handleChange('email')}
@@ -57,7 +87,8 @@ export default function SignInPage(): JSX.Element {
             />
 
             <TextInput
-              placeholder="Mật khẩu"
+              //placeholder="Mật khẩu"
+              placeholder="Password"
               style={styles.textInput}
               placeholderTextColor={COLORS.grey}
               onChangeText={handleChange('password')}
@@ -67,7 +98,8 @@ export default function SignInPage(): JSX.Element {
             />
 
             <TextInput
-              placeholder="Nhập lại mật khẩu"
+              // placeholder="Nhập lại mật khẩu"
+              placeholder="Repeat Password"
               style={styles.textInput}
               placeholderTextColor={COLORS.grey}
               onChangeText={handleChange('password')}
@@ -76,7 +108,9 @@ export default function SignInPage(): JSX.Element {
               secureTextEntry
             />
 
-            <TouchableOpacity style={styles.continueButton}>
+            <TouchableOpacity
+              onPress={handleSignUp}
+              style={styles.continueButton}>
               <Text style={styles.text}>Sign Up</Text>
             </TouchableOpacity>
 

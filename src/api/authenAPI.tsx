@@ -61,13 +61,30 @@ export async function loginFacebook() {
   return auth().signInWithCredential(facebookCredential);
 }
 
-export const handleEmailPhoneSignIn = async (
-  username: string,
-  password: string,
-) => {
-  const user = await getDataByDocId(USER_COLLECTION, username);
+export const handleEmailSignUp = async (username: string, password: string) => {
+  await auth().createUserWithEmailAndPassword(username, password);
+  const user = await auth().currentUser;
 
-  if (user.username === username && user.password === password) return true;
+  if (user) {
+    await user.sendEmailVerification();
+
+    return true;
+  }
 
   return false;
+};
+
+export const handleEmailSignIn = async (username: string, password: string) => {
+  await auth().signInWithEmailAndPassword(username, password);
+
+  const user = await auth().currentUser;
+  if (user) return user;
+};
+
+export const sendEmailVerify = async () => {
+  const user = await auth().currentUser;
+
+  if (user) {
+    await user.sendEmailVerification();
+  }
 };

@@ -1,8 +1,10 @@
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {checkDocExist, createNewDoc} from './firebaseAPI';
+import {checkDocExist, createNewDoc, getDataByDocId} from './firebaseAPI';
 import {USER_COLLECTION} from 'constants/values';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {cos} from 'react-native-reanimated';
+import {useReducer} from 'react';
 
 export async function loginGoogle() {
   // Check if your device supports Google Play
@@ -58,3 +60,14 @@ export async function loginFacebook() {
   // Sign-in the user with the credential
   return auth().signInWithCredential(facebookCredential);
 }
+
+export const handleEmailPhoneSignIn = async (
+  username: string,
+  password: string,
+) => {
+  const user = await getDataByDocId(USER_COLLECTION, username);
+
+  if (user.username === username && user.password === password) return true;
+
+  return false;
+};

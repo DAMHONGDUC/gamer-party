@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {checkValidateEmail, checkValidatePhone} from 'helper';
 import * as Yup from 'yup';
+import {handleEmailPhoneSignIn} from 'api/authenAPI';
 
 const SignupSchema = Yup.object().shape({
   email_or_phone: Yup.string()
@@ -31,23 +32,10 @@ export default function SignInPage(): JSX.Element {
     navigation.navigate('WelcomePage');
   };
 
-  const handleSignInWithEmail = (username: string, password: string) => {
-    console.log('handleSignInWithEmail');
-  };
+  const handleSignIn = async (username: string, password: string) => {
+    const isSignIn = await handleEmailPhoneSignIn(username, password);
 
-  const handleSignInWithPhone = (username: string, password: string) => {
-    console.log('handleSignInWithPhone');
-  };
-
-  const handleSignIn = (username: string, password: string) => {
-    const checkEmail = checkValidateEmail(username);
-    const checkPhone = checkValidatePhone(username);
-
-    if (checkEmail) {
-      handleSignInWithEmail(username, password);
-    } else if (checkPhone) {
-      handleSignInWithPhone(username, password);
-    }
+    console.log(isSignIn);
   };
 
   return (
@@ -67,7 +55,6 @@ export default function SignInPage(): JSX.Element {
         validationSchema={SignupSchema}
         onSubmit={values => {
           handleSignIn(values.email_or_phone, values.password);
-          console.log(values);
         }}>
         {({
           handleChange,

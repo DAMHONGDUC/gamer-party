@@ -13,3 +13,11 @@ export const createNewDoc = async (
 ) => {
   await firestore().collection(collection).doc(docID).set(data);
 };
+
+export const getDataByDocId = async (collection: string, docId: string) => {
+  const res = await firestore().collection(collection).doc(docId).get();
+
+  if (res?._data) {
+    return res._data;
+  }
+};

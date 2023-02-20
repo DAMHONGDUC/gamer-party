@@ -46,7 +46,7 @@ export default function SignInPage(): JSX.Element {
   const handleSignIn = async (username: string, password: string) => {
     const user = await handleEmailSignIn(username, password);
 
-    user.emailVerified ? handleAfterSignIn() : navToVerifyPage(username);
+    user!.emailVerified ? handleAfterSignIn() : navToVerifyPage(username);
   };
 
   return (

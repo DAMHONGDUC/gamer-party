@@ -13,11 +13,12 @@ import {USER_ID} from 'constants/values';
 import {useDispatch} from 'react-redux';
 import {setUid} from 'redux/slices/appSlide';
 import {useNavigation} from '@react-navigation/native';
+import Config from 'react-native-config';
 
 GoogleSignin.configure({
-  webClientId:
-    '416265090283-q8lkm9dvbsk71t11voq0kcq077dauljq.apps.googleusercontent.com',
+  webClientId: Config.GOOGLESIGNIN_WEBCLIENTID,
 });
+
 export default function WelcomePage(): JSX.Element {
   const {handleAfterSignIn} = useContext(AuthContext);
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ export default function WelcomePage(): JSX.Element {
       </View>
       <View>
         <Text style={styles.introText}>
-          Đăng nhập để kết nối và tìm bạn bè chơi game chung.
+          Sign in to connect and find your gaming friends.
         </Text>
         <LoginOptionButton
           title={'Continue with Facebook'}

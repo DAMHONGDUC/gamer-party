@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "ENVFILE=.env.dev react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint src/**/*.{js,tsx}",
     "start": "react-native start",
@@ -25,6 +25,7 @@
     "react-native": "0.71.3",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-awesome-alerts": "^2.0.0",
+    "react-native-config": "^1.5.0",
     "react-native-fbsdk-next": "^11.1.0",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-reanimated": "^2.14.4",

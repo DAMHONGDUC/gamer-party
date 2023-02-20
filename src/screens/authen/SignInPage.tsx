@@ -12,12 +12,42 @@ import {COLORS} from 'constants/theme';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {checkValidateEmail, checkValidatePhone} from 'helper';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+  email_or_phone: Yup.string()
+    .required('Email / Phone is required')
+    .test('email_or_phone', 'Email / Phone is invalid', value => {
+      return checkValidateEmail(value) || checkValidatePhone(value);
+    }),
+  password: Yup.string().required('Password is required'),
+});
 
 export default function SignInPage(): JSX.Element {
   const navigation = useNavigation();
 
   const handleBackButton = () => {
     navigation.navigate('WelcomePage');
+  };
+
+  const handleSignInWithEmail = (username: string, password: string) => {
+    console.log('handleSignInWithEmail');
+  };
+
+  const handleSignInWithPhone = (username: string, password: string) => {
+    console.log('handleSignInWithPhone');
+  };
+
+  const handleSignIn = (username: string, password: string) => {
+    const checkEmail = checkValidateEmail(username);
+    const checkPhone = checkValidatePhone(username);
+
+    if (checkEmail) {
+      handleSignInWithEmail(username, password);
+    } else if (checkPhone) {
+      handleSignInWithPhone(username, password);
+    }
   };
 
   return (
@@ -31,32 +61,53 @@ export default function SignInPage(): JSX.Element {
         </View>
       </TouchableHighlight>
       <Image style={styles.image} source={require('assets/sign_in.png')} />
+
       <Formik
-        initialValues={{email: '', password: ''}}
-        onSubmit={values => console.log(values)}>
-        {({handleChange, handleBlur, handleSubmit, values}) => (
+        initialValues={{email_or_phone: '', password: ''}}
+        validationSchema={SignupSchema}
+        onSubmit={values => {
+          handleSignIn(values.email_or_phone, values.password);
+          console.log(values);
+        }}>
+        {({
+          handleChange,
+          errors,
+          touched,
+          handleBlur,
+          handleSubmit,
+          values,
+          setFieldTouched,
+        }) => (
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Email hoặc SĐT"
+              placeholder="Email or Phone Number"
               placeholderTextColor={COLORS.grey}
               style={styles.textInput}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              keyboardType="email-address"
+              onChangeText={handleChange('email_or_phone')}
+              onBlur={() => setFieldTouched('email_or_phone')}
+              value={values.email_or_phone}
+              // keyboardType="email-address"
             />
+            {touched.email_or_phone && errors.email_or_phone && (
+              <Text style={styles.validationText}>{errors.email_or_phone}</Text>
+            )}
 
             <TextInput
-              placeholder="Mật khẩu"
+              placeholder="Password"
               style={styles.textInput}
               placeholderTextColor={COLORS.grey}
               onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
+              onBlur={() => setFieldTouched('password')}
               value={values.password}
               secureTextEntry
             />
+            {touched.password && errors.password && (
+              <Text style={styles.validationText}>{errors.password}</Text>
+            )}
 
-            <TouchableOpacity style={styles.continueButton}>
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={styles.continueButton}>
               <Text style={styles.text}>Sign In</Text>
             </TouchableOpacity>
 
@@ -96,7 +147,7 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: '100%',
-    marginBottom: 20,
+    marginTop: 20,
     backgroundColor: 'white',
     borderColor: COLORS.grey,
     borderWidth: 1,
@@ -135,4 +186,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerBackButton: {position: 'absolute', left: 0, top: 0},
+  validationText: {
+    color: COLORS.primary,
+    fontSize: 13,
+    marginLeft: 5,
+    marginTop: 3,
+  },
 });

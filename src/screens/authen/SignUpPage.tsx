@@ -14,9 +14,11 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {handleEmailSignUp} from 'api/authenAPI';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
 
 export default function SignInPage(): JSX.Element {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [showAlert, setShowAlert] = useState(false);
 
   const handleBackButton = () => {

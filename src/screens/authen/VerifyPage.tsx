@@ -1,15 +1,16 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import {COLORS} from 'constants/theme';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from 'constants/values';
 import {sendEmailVerify} from 'api/authenAPI';
 import {showToastAndroid} from 'helper';
+import {AppRouteParamList} from 'constants/values';
 
 export default function VerifyPage() {
   const [verified, setVerified] = useState(false);
-  const route = useRoute();
+  useRoute<RouteProp<AppRouteParamList, 'VerifyPage'>>();
   const {handleAfterSignIn} = useContext(AuthContext);
 
   useEffect(() => {
@@ -18,8 +19,8 @@ export default function VerifyPage() {
         if (user) {
           const onIdTokenChangedUnsubscribe = auth().onIdTokenChanged(user => {
             const unsubscribeSetInterval = setTimeout(() => {
-              auth().currentUser.reload();
-              auth().currentUser.getIdToken(true);
+              auth().currentUser?.reload();
+              auth().currentUser?.getIdToken(true);
             }, 10000);
 
             if (user && user.emailVerified) {
@@ -47,7 +48,10 @@ export default function VerifyPage() {
       <View style={styles.body}>
         <Text style={styles.mainText}>
           We've sent an email to
-          <Text style={{fontWeight: 'bold'}}> {route.params.email}</Text>
+          <Text style={{fontWeight: 'bold'}}>
+            {' '}
+            {route.params?.email ?? 'you'}
+          </Text>
         </Text>
         <Text style={styles.mainText}>
           Please verify your account by click the link in email

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "416265090283",
+    "project_id": "gamer-party",
+    "storage_bucket": "gamer-party.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416265090283:android:39203b9ae1d0de3a993aae",
+        "android_client_info": {
+          "package_name": "com.gamerparty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416265090283-1s3bkuscobq12tu8b7f54r9s6dd36u13.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamerparty",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "416265090283-q8lkm9dvbsk71t11voq0kcq077dauljq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvu3mvax_u8Ze_SueHgBk20h9F3_g5XLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416265090283-q8lkm9dvbsk71t11voq0kcq077dauljq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

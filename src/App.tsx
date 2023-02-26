@@ -1,8 +1,18 @@
 import React from 'react';
-import HomeScreen from 'screens/home/HomeScreen';
+import SplashScreen from 'react-native-splash-screen';
+import {useEffect} from 'react';
+import RootNavigation from 'navigation/RootNavigation';
+import {store} from 'redux/store';
+import {Provider} from 'react-redux';
 
-function App(): JSX.Element {
-  return <HomeScreen />;
+export default function App(): JSX.Element {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <RootNavigation />
+    </Provider>
+  );
 }
-
-export default App;

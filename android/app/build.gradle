@@ -1,5 +1,8 @@
 apply plugin: "com.android.application"
+apply plugin: "com.google.gms.google-services"
 apply plugin: "com.facebook.react"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -149,6 +152,13 @@ android {
 }
 
 dependencies {
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-splash-screen')
+
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
